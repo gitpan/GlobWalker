@@ -1,7 +1,7 @@
 #
 # GlobWalker
 #
-# $Id: GlobWalker.pm,v 1.2 2000/10/30 15:55:15 dave Exp dave $
+# $Id: GlobWalker.pm,v 1.3 2000/11/01 21:00:45 dave Exp dave $
 #
 # Perl module for listing objects in typeglobs
 #
@@ -11,6 +11,11 @@
 # modify it under the same terms as Perl itself.
 #
 # $Log: GlobWalker.pm,v $
+# Revision 1.3  2000/11/01 21:00:45  dave
+# Patched test code CODE objects.
+# Fixed test suite.
+#    - both patches courtesy of Robin Houston
+#
 # Revision 1.2  2000/10/30 15:55:15  dave
 # Fixed bugs intorduced by changing name from Globwalker to GlobWalker :(
 #
@@ -29,7 +34,7 @@ require Exporter;
 @EXPORT_OK = qw(get_things get_subs get_scalars get_arrays 
                 get_hashes get_filehandles);
 
-$VERSION = sprintf "%d.%02d", '$Revision: 1.2 $ ' =~ /(\d+)\.(\d+)/;
+$VERSION = sprintf "%d.%02d", '$Revision: 1.3 $ ' =~ /(\d+)\.(\d+)/;
 
 sub get_things {
   my $thing = shift;
@@ -40,6 +45,8 @@ sub get_things {
   while (my ($sym_name, $sym_glob) = each %{"${pkg}::"}) {
     if ($thing eq 'SCALAR' ) {
       push @things, $sym_name if defined $ {*$sym_glob{$thing}};
+    } elsif ($thing eq 'CODE' ) {
+      push @things, $sym_name if defined & {*$sym_glob{$thing}};
     } else {
       push @things, $sym_name if defined *$sym_glob{$thing};
     }
@@ -59,12 +66,12 @@ __END__
 
 =head1 NAME
 
-Globwalker - Perl module to explore the contents of the Perl 
+GlobWalker - Perl module to explore the contents of the Perl 
              symbol table.
 
 =head1 SYNOPSIS
 
-  use Globwalker qw(get_subs get_arrays);
+  use GlobWalker qw(get_subs get_arrays);
 
   my @subs = get_subs;          # List of subs in calling package
   @subs = get_subs('Another')   # List of subs in package 'Another'
@@ -74,10 +81,10 @@ Globwalker - Perl module to explore the contents of the Perl
 
 =head1 DESCRIPTION
 
-Globwalker is a Perl module which allows you to explore the contents
+GlobWalker is a Perl module which allows you to explore the contents
 of a symbol table.
 
-Globwalker exports six subroutines. Of these, five will list the
+GlobWalker exports six subroutines. Of these, five will list the
 objects of a particular type (subroutines, scalars, arrays, hashes
 and filehandles). These subroutines all take an optional argument
 which is the name of the package whose symbol table should be

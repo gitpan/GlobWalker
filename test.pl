@@ -28,13 +28,13 @@ sub sub2 {
   return
 }
 
-print "@{[get_subs]}" eq 'get_subs|sub1|sub2|get_arrays|get_filehandles' ? '' : 'not', "ok 2\n";
+print "@{[sort {$a cmp $b} get_subs]}" eq 'get_arrays|get_filehandles|get_subs|sub1|sub2' ? '' : 'not ', "ok 2\n";
 
-print "@{[get_subs('Another')]}" eq 'asub1|asub2' ? '' : 'not', "ok 3\n";
+print "@{[sort {$a cmp $b} get_subs('Another')]}" eq 'asub1|asub2' ? '' : 'not', "ok 3\n";
 
+print "@{[sort {$a cmp $b} get_arrays]}" eq 'ARGV|INC|_' ? '' : 'not ', "ok 4\n";
 
-print "@{[get_arrays]}" eq 'ARGV|INC|_' ? '' : 'not', "ok 4\n";
-print "@{[get_filehandles]}" eq 'STDOUT|ARGV|STDIN|stderr|stdout|stdin|STDERR' ? '' : 'not', "ok 5\n";
+print "@{[sort {$a cmp $b} get_filehandles]}" eq 'ARGV|STDERR|STDIN|STDOUT|stderr|stdin|stdout' ? '' : 'not ', "ok 5\n";
 
 package Another;
 
