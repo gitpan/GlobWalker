@@ -1,7 +1,7 @@
 #
 # GlobWalker
 #
-# $Id: GlobWalker.pm,v 1.1 2000/10/30 15:45:39 dave Exp $
+# $Id: GlobWalker.pm,v 1.2 2000/10/30 15:55:15 dave Exp dave $
 #
 # Perl module for listing objects in typeglobs
 #
@@ -11,11 +11,14 @@
 # modify it under the same terms as Perl itself.
 #
 # $Log: GlobWalker.pm,v $
+# Revision 1.2  2000/10/30 15:55:15  dave
+# Fixed bugs intorduced by changing name from Globwalker to GlobWalker :(
+#
 # Revision 1.1  2000/10/30 15:45:39  dave
 # Initial revision
 #
 #
-package Globwalker;
+package GlobWalker;
 
 use strict;
 use vars qw($VERSION @ISA @EXPORT_OK);
@@ -26,7 +29,7 @@ require Exporter;
 @EXPORT_OK = qw(get_things get_subs get_scalars get_arrays 
                 get_hashes get_filehandles);
 
-$VERSION = sprintf "%d.%02d", '$Revision: 1.1 $ ' =~ /(\d+)\.(\d+)/;
+$VERSION = sprintf "%d.%02d", '$Revision: 1.2 $ ' =~ /(\d+)\.(\d+)/;
 
 sub get_things {
   my $thing = shift;

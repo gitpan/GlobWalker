@@ -8,7 +8,7 @@
 
 BEGIN { $| = 1; print "1..5\n"; }
 END {print "not ok 1\n" unless $loaded;}
-use Globwalker qw(get_subs get_arrays get_filehandles);
+use GlobWalker qw(get_subs get_arrays get_filehandles);
 $loaded = 1;
 print "ok 1\n";
 
